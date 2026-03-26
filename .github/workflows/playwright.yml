@@ -35,8 +35,7 @@ jobs:
         run: npm test
         env:
           BASE_URL: ${{ secrets.BASE_URL }}
-          USERNAME: ${{ secrets.USERNAME }}
-          PASSWORD: ${{ secrets.PASSWORD }}
+          INVENTORY_PAGE: ${{ secrets.INVENTORY_PAGE }}
 
       - name: Upload HTML Report
         uses: actions/upload-artifact@v4
