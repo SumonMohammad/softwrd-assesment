@@ -32,7 +32,7 @@
 
 
 # **Architecture Overview**
-
+```
 softwrd_automation/
 │
 ├── src/
@@ -66,6 +66,7 @@ softwrd_automation/
 ├── playwright.config.ts
 ├── package.json
 └── .github/workflows/playwright.yml
+```
 
 
 # **Key Design Principles**
