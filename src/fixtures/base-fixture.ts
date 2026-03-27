@@ -1,6 +1,6 @@
 import { test as base } from "@playwright/test";
 import { LoginPage } from "../pages/login-page";
-import { ProductPage } from "../pages/product-page";
+import { InventoryPage } from "../pages/inventory-page";
 import { CheckoutPage } from "../pages/checkout-page";
 import { CartPage } from "../pages/cart-page";
 import { CheckoutInfoPage } from "../pages/checkout-info-page";
@@ -11,7 +11,7 @@ export const test = base.extend<{
   loginPage: LoginPage;
   cartPage: CartPage;
   checkoutPage: CheckoutPage;
-  productPage: ProductPage;
+  inventoryPage: InventoryPage;
   checkoutInfoPage: CheckoutInfoPage;
   checkoutCompletePage: CheckoutCompletePage;
   checkoutOverviewPage: CheckoutOverviewPage;
@@ -28,9 +28,9 @@ export const test = base.extend<{
     const checkoutPage = new CheckoutPage(page);
     await use(checkoutPage);
   },
-  productPage: async ({ page }, use) => {
-    const productPage = new ProductPage(page);
-    await use(productPage);
+  inventoryPage: async ({ page }, use) => {
+    const inventoryPage = new InventoryPage(page);
+    await use(inventoryPage);
   },
   checkoutInfoPage: async ({ page }, use) => {
     const checkoutInfoPage = new CheckoutInfoPage(page);

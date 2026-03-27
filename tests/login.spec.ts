@@ -2,12 +2,11 @@ import { test } from "../src/fixtures/base-fixture";
 import { expect } from "@playwright/test";
 import { users } from "../src/utils/test-data/users";
 import { products } from "../src/utils/test-data/products";
-import { ProductPage } from "../src/pages/product-page";
 
 test.describe("Login Functionality for positive case", () => {
   test("should allow user to login with valid credentials and logout successfully",{tag: [ "@smoke","@sanity","@regression"]}, async ({
     loginPage,
-    productPage
+    inventoryPage
   }) => {
     await loginPage.goToUrl();
     await loginPage.enterLoginCredentials(
@@ -16,7 +15,7 @@ test.describe("Login Functionality for positive case", () => {
     );
     await loginPage.clickToLogin();
     await expect(loginPage.page).toHaveURL("/inventory.html");
-    await productPage.logout();
+    await inventoryPage.logout();
     await expect(loginPage.page).toHaveURL(/saucedemo.com/);
   });
 });
@@ -61,7 +60,7 @@ test.describe("Login Functionality for Negative Cases", () => {
 
   test("Verify UI glitches for problem user",{tag: ["@regression"]}, async ({
     loginPage,
-    productPage,
+    inventoryPage,
   }) => {
     await loginPage.goToUrl();
     await loginPage.enterLoginCredentials(
@@ -69,26 +68,26 @@ test.describe("Login Functionality for Negative Cases", () => {
       users.problem.password,
     );
     await loginPage.clickToLogin();
-    const imageSrcs = await productPage.getAllProductImageSrcs();
+    const imageSrcs = await inventoryPage.getAllProductImageSrcs();
     for (const src of imageSrcs) {
       expect(src).toContain("sl-404");
     }
   });
 
-  test("Error user actions validation",{tag: ["@regression"]}, async ({ loginPage, productPage }) => {
+  test("Error user actions validation",{tag: ["@regression"]}, async ({ loginPage, inventoryPage }) => {
     await loginPage.goToUrl();
     await loginPage.enterLoginCredentials(
       users.error.username,
       users.error.password,
     );
     await loginPage.clickToLogin();
-    await productPage.addItem(products.fleeceJacket.id); // this button is not clickable for error user
+    await inventoryPage.addItem(products.fleeceJacket.id); // this button is not clickable for error user
     await expect(
-      productPage.removeButton(products.fleeceJacket.id),
+      inventoryPage.removeButton(products.fleeceJacket.id),
     ).not.toBeVisible();// That's why we are checking that remove button is not visible because item is not added to the cart
   });
 
-  test("Performance glitch user login",{tag: ["@regression"]}, async ({ loginPage, page ,productPage}) => {
+  test("Performance glitch user login",{tag: ["@regression"]}, async ({ loginPage, page ,inventoryPage}) => {
     await loginPage.goToUrl();
     await loginPage.enterLoginCredentials(
       users.performance.username,
@@ -97,7 +96,7 @@ test.describe("Login Functionality for Negative Cases", () => {
     await loginPage.clickToLogin();
     await page.waitForLoadState("domcontentloaded");
     await expect(page).toHaveURL("/inventory.html");
-    await expect(productPage.productTitles.first()).toBeVisible();
-    await expect(productPage.productImages.nth(3)).toBeVisible();
+    await expect(inventoryPage.productTitles.first()).toBeVisible();
+    await expect(inventoryPage.productImages.nth(3)).toBeVisible();
   });
 });

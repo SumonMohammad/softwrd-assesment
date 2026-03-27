@@ -1,6 +1,6 @@
 import { Locator, Page, expect } from "@playwright/test";
 
-export class ProductPage {
+export class InventoryPage {
   readonly page: Page;
   readonly productTitles: Locator;
   readonly productDescription: Locator;
@@ -80,6 +80,8 @@ export class ProductPage {
   }
 
   async goToCart() {
+    await expect(this.cartLink).toBeVisible();
+    await expect(this.cartLink).toBeEnabled();
     await this.cartLink.click();
   }
 

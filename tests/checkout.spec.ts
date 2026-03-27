@@ -3,11 +3,11 @@ import { products } from "../src/utils/test-data/products";
 import { checkoutData } from "../src/utils/test-data/checkout";
 
 test.describe("Checkout Flow", () => {
-  test.beforeEach(async ({ productPage, cartPage }) => {
-    await productPage.goToUrl();
-    await productPage.addItem(products.backpack.id);
-    await productPage.addItem(products.onesie.id);
-    await productPage.goToCart();
+  test.beforeEach(async ({ inventoryPage, cartPage }) => {
+    await inventoryPage.goToUrl();
+    await inventoryPage.addItem(products.backpack.id);
+    await inventoryPage.addItem(products.onesie.id);
+    await inventoryPage.goToCart();
     await cartPage.checkout();
   });
 
